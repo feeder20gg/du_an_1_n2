@@ -13,6 +13,8 @@
     <style>
         .custom-menu-bg {
             background-color: #e0f7fa; 
+            min-height: 100vh;
+            height: 100%;
         }
         th{font-size: 12px;}
     </style>
@@ -34,11 +36,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Hi!</a>
                 </li>
+                <?php 
+                if(isset($_SESSION['name_admin'])){
+                    $name_admin=$_SESSION['name_admin'];
+                }else{
+                    $name_admin='';
+                }
+                ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="#"><?=$name_admin?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="?act=logout">Logout</a>
                 </li>
             </ul>
             <form class="d-flex">
@@ -49,10 +58,10 @@
     </nav>
 
     <div class="d-flex">
-        <div class="custom-menu-bg" class="bg-light" style="width: 250px; height: calc(100vh - 56px);">
+    <div class="custom-menu-bg" style="width: 250px; min-height: 100vh;">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="?act=ad_product"><i class="fa fa-product-hunt"></i> Quản lí sản phẩm</a>
+                    <a class="nav-link" href="?act=list_product"><i class="fa fa-product-hunt"></i> Quản lí sản phẩm</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="?act=ad_category"><i class="fa fa-list"></i> Quản lí danh mục</a>
@@ -78,12 +87,10 @@
             </ul>
         </div>
     
-        <div class="container mt-3" style="width: calc(100% - 300px);">
+        <div class="container mt-3" style="width: calc(100% - 200px);">
             
-            <div class="container mt-3">
-
                 <?=$content?>
-            </div>
+           
         </div>
         
     </div>

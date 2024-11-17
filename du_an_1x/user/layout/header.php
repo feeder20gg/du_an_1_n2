@@ -150,6 +150,16 @@ h2 {
                                     </div>
                                     <div class="col-9">
                                         Xin chào!<br>
+                                        <?php 
+                                        if(isset($_SESSION['name_user'])){
+                                            $name_user=$_SESSION['name_user'];
+                                        }else{
+                                            $name_user='';
+                                        }
+                                        ?>
+                                                        <li class="nav-item">
+                                                <a class="nav-link" href="#"><?=$name_user?></a>
+                                            </li>
                                         <a href="?act=login" class="text-decoration-none text-primary ">Đăng nhập</a>
                                         <a href="?act=register" class="text-decoration-none text-secondary ">Đăng ký</a>
                                     </div>

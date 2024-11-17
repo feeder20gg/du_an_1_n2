@@ -9,8 +9,16 @@
         return $value;
     }
 
-    function check_login($email,$pass){
-        $sql="SELECT name, email, pass FROM users where email='$email' and pass='$pass";
-        $value= select_one($sql);
-        
+    function check_login_admin($email,$pass){
+        try{
+            $sql="SELECT*FROM USERS WHERE email='$email' and pass='$pass' and role='admin'";
+            $value= select_one($sql);
+            return $value;
+        }catch(Exception $e){
+            return false;
+        }
     }
+    function logout_admin() {
+        $_SESSION['name_admin']=null;
+    }
+
