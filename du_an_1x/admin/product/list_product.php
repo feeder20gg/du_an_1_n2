@@ -28,7 +28,7 @@
                     <td><?= number_format($product['price']) ?> VND</td>
                     <td><img src="<?='../'.$product['img_url'] ?>" alt="Product Image" width="100"></td>
                     <!-- <td><img src="../upload/23-730x408-1.jpg" alt=""></td> -->
-                    <td>
+                    <td class="text-nowrap "> 
                     <a href="?act=detail_product&id=<?= $product['products_id'] ?>" class="btn btn-info">Chi tiết</a>
                     <a href="?act=edit_product_form&id=<?= $product['products_id'] ?>" class="btn btn-warning">Sửa</a>
                     <a onclick="return confirm('Xác nhận xóa sản phẩm?')" href="?act=delete_product&id=<?= $product['products_id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>

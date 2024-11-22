@@ -3,13 +3,49 @@
     include_once '../model/auth.php';
     include_once '../model/product.php';
     include_once '../model/category.php';
+    include_once '../model/info_order.php';
 
+
+    // if(!isset($_SESSION['name_admin'])||$_SESSION['name_admin']==''){
+    //     header('location:login_admin.php');
+    // }
+                                                                                                                                                                                                                                                                    
     $act=isset($_GET['act'])&&$_GET['act']!==''?$_GET['act']: 'ad_controller';
     // $act=$_GET['act']||$_GET['act']='' ??'home';
     // echo $act;
 
     ob_start();
     switch($act){
+        case 'detail_order':
+            if(isset($_GET['id'])){
+                $id=(int)$_GET['id'];
+                $value=order_detail($id);
+                print_r($value);
+            }
+            include 'order/detail_order.php';
+            break;
+        case'list_order':
+            $list_cart=select_order();
+            print_r($list_cart);
+            include 'order/list_order.php';
+            break;
+        case 'list_category':
+            $list_category=list_category();
+            print_r(count_product(5));
+            include 'category/list_category.php';
+            break;
+        case 'add_category':
+            if(isset($_POST['btn'])){
+                // print_r($_POST);
+                $name_category=$_POST['name_category'];
+                $description_category=$_POST['description_category'];
+                $img_name=$_FILES['img_url_category']['name'];
+                echo $img_name;
+            }
+
+            include 'category/add_category.php';
+            break;
+        
         case 'delete_product':
             if(isset($_GET['id'])){
                 $id= (int) $_GET['id'];
@@ -76,6 +112,89 @@
             
             include 'product/edit_product.php';
             break;
+            case 'list_category':
+                $list_category=list_category();
+                print_r(count_product(5));
+                include 'category/list_category.php';
+                break;
+                case 'add_category':
+                    if (isset($_POST['btn'])) {
+                        $name_category = $_POST['name_category'];
+                        $description_category = $_POST['description_category'];
+                        
+                        // Upload file ảnh
+                        if (isset($_FILES['img_url_category']) && $_FILES['img_url_category']['error'] == 0) {
+                            $upload_dir = __DIR__ . '/../upload/';
+                            $img_name = basename($_FILES['img_url_category']['name']);
+                            $upload_path = $upload_dir . $img_name;
+                
+                            if (move_uploaded_file($_FILES['img_url_category']['tmp_name'], $upload_path)) {
+                                // Thêm danh mục vào cơ sở dữ liệu
+                                add_category($name_category, $description_category, $img_name);
+                                
+                            } else {
+                                echo 'Lỗi: Không thể tải ảnh lên.';
+                            }
+                        } else {
+                            echo 'Lỗi: Chưa chọn ảnh.';
+                        }
+                    }
+                    include 'category/add_category.php';
+                    break;
+                
+                    case 'edit_category':
+                        if (isset($_GET['id'])) {
+                            $id = $_GET['id'];
+                            $category = select_one("SELECT * FROM categories WHERE id = $id");
+                    
+                            if (isset($_POST['btn'])) {
+                                $name_category = $_POST['name_category'];
+                                $description_category = $_POST['description_category'];
+                    
+                                // Upload ảnh mới nếu có
+                                if (isset($_FILES['img_url_category']) && $_FILES['img_url_category']['error'] == 0) {
+                                    $upload_dir = __DIR__ . '/../upload/';
+                                    $img_name = basename($_FILES['img_url_category']['name']);
+                                    $upload_path = $upload_dir . $img_name;
+                    
+                                    if (move_uploaded_file($_FILES['img_url_category']['tmp_name'], $upload_path)) {
+                                        $img_url = $img_name;
+                                    } else {
+                                        echo 'Lỗi: Không thể tải ảnh lên.';
+                                    }
+                                } else {
+                                    $img_url = $category['img_url_category']; // Giữ ảnh cũ nếu không thay đổi
+                                }
+                    
+                                // Cập nhật cơ sở dữ liệu
+                                $sql = "UPDATE categories SET name_category = '$name_category', 
+                                                              description_category = '$description_category', 
+                                                              img_url_category = '$img_url' 
+                                        WHERE id = $id";
+                                pdo_excute($sql);
+                                header("Location: ?act=list_category");
+                            }
+                        }
+                        include 'category/edit_category.php';
+                        break;
+                        case 'delete_category':
+                            if (isset($_GET['id'])) {
+                                $id = $_GET['id'];
+                                $category = select_one("SELECT * FROM categories WHERE id = $id");
+                        
+                                // Xóa file ảnh
+                                $upload_dir = __DIR__ . '/../upload/';
+                                if (file_exists($upload_dir . $category['img_url_category'])) {
+                                    unlink($upload_dir . $category['img_url_category']);
+                                }
+                        
+                                // Xóa danh mục trong cơ sở dữ liệu
+                                $sql = "DELETE FROM categories WHERE id = $id";
+                                pdo_excute($sql);
+                        
+                                header("Location: ?act=list_category");
+                            }
+                            break;    
         case'list_product':
             $list=list_product();
             // print_r($list);

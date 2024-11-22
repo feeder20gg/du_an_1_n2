@@ -64,10 +64,10 @@
                     <a class="nav-link" href="?act=list_product"><i class="fa fa-product-hunt"></i> Quản lí sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?act=ad_category"><i class="fa fa-list"></i> Quản lí danh mục</a>
+                    <a class="nav-link" href="?act=list_category"><i class="fa fa-list"></i> Quản lí danh mục</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?act=ad_oder"><i class="fa fa-shopping-cart"></i> Quản lí đơn hàng</a>
+                    <a class="nav-link" href="?act=list_order"><i class="fa fa-shopping-cart"></i> Quản lí đơn hàng</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="?act=ad_clien"><i class="fa fa-users"></i> Quản lý khách hàng</a> 
@@ -87,7 +87,7 @@
             </ul>
         </div>
     
-        <div class="container mt-3" style="width: calc(100% - 200px);">
+        <div class="container mt-3" style="width: calc(100% - 160px);">
             
                 <?=$content?>
            

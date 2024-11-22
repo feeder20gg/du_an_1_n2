@@ -11,10 +11,10 @@
                 <!-- The slideshow/carousel -->
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="uploads/banner_new1.jpg" alt="Los Angeles" class="d-block w-100">
+                    <img src="upload/banner_new1.jpg" alt="Los Angeles" class="d-block w-100">
                   </div>
                   <div class="carousel-item">
-                    <img src="uploads/banner_new2.jpg" alt="Chicago" class="d-block w-100">
+                    <img src="upload/banner_new2.jpg" alt="Chicago" class="d-block w-100">
                   </div>
                 </div>
             </div>
@@ -27,13 +27,12 @@
         <!-- <a href="#!khuyenmai" class="btn btn-warning">Xem khuyến mãi</a> -->
     </div>
 
-    <!-- Phần Danh mục sản phẩm -->
     <h2 class="category-title">Danh mục sản phẩm</h2>
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="category-card">
                 <h4>Laptop Gaming</h4>
-                <img style="height: 180px;" src="uploads/23-730x408-1.jpg" class="img-fluid" alt="Laptop Gaming">
+                <img style="height: 180px;" src="upload/23-730x408-1.jpg" class="img-fluid" alt="Laptop Gaming">
                 <p>Mời bạn xem các sản phẩm laptop gaming mạnh mẽ nhất!</p>
                 <a href="#!laptop-gaming" class="btn btn-primary">Khám phá</a>
             </div>
@@ -41,7 +40,7 @@
         <div class="col-md-4">
             <div class="category-card">
                 <h4>Laptop Văn Phòng</h4>
-                <img style="height: 180px;" src="uploads/2109_2034_a2s.jpg" class="img-fluid" alt="Laptop Văn Phòng">
+                <img style="height: 180px;" src="upload/2109_2034_a2s.jpg" class="img-fluid" alt="Laptop Văn Phòng">
                 <p>Các mẫu laptop lý tưởng cho công việc hàng ngày.</p>
                 <a href="#!laptop-van-phong" class="btn btn-primary">Khám phá</a>
             </div>
@@ -49,15 +48,41 @@
         <div class="col-md-4">
             <div class="category-card">
                 <h4>Phụ Kiện Laptop</h4>
-                <img style="height: 180px;" src="uploads/2109_2050_8s.jpg" class="img-fluid" alt="Phụ Kiện Laptop">
+                <img style="height: 180px;" src="upload/2109_2050_8s.jpg" class="img-fluid" alt="Phụ Kiện Laptop">
                 <p>Chọn những phụ kiện tốt nhất cho laptop của bạn.</p>
                 <a href="#!phukien-laptop" class="btn btn-primary">Khám phá</a>
             </div>
         </div>
     </div>
+    <main class="container my-5">
+    <h2 class="category-title text-center mb-4">Sản phẩm nổi bật</h2>
+    <div class="row g-4">
+        <?php foreach ($list_product as $product): ?>
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <img src="<?= $product['img_url'] ?>" class="card-img-top" alt="<?= $product['name_products'] ?>">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-truncate name-limited" title="<?= $product['name_products'] ?>">
+                        <?= $product['name_products'] ?>
+                    </h5>
+                    <p class="card-text text-muted description-limited" title="<?= $product['description'] ?>">
+                        <?= $product['description'] ?>
+                    </p>
+                    <p class="text-danger fw-bold mb-3">Giá: <?= number_format($product['price']) ?> VNĐ</p>
+                    <a href="?act=product_detail&id=<?= $product['products_id'] ?>" class="btn btn-primary mt-auto">
+                        Xem chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</main>
+
+
 
     <!-- Phần Sản phẩm nổi bật -->
-    <h2 class="category-title">Sản phẩm nổi bật</h2>
+    <!-- <h2 class="category-title">Sản phẩm nổi bật</h2>
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="product-card">
@@ -86,7 +111,7 @@
                 <a href="?act=product_detail" class="btn btn-primary">Xem chi tiết</a>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Phần Đánh giá khách hàng -->
     <h2 class="category-title">Đánh giá khách hàng</h2>

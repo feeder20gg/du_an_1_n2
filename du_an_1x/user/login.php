@@ -1,5 +1,12 @@
+<?php 
+    if(isset($_SESSION['err_cart'])){
+        echo $_SESSION['err_cart'];
+        $_SESSION['err_cart']=null;
+    }
+?>
+
 <div class="login-form">
-<form method="POST" action="">
+<form method="POST" action="?act=login">
     <div class="mb-3">
         <label for="email" class="form-label">Địa chỉ email</label>
         <input type="email" class="form-control" name="email" id="email" placeholder="Nhập địa chỉ email" required>
@@ -24,3 +31,4 @@
 </form>
 
 </div>
+

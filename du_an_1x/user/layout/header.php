@@ -9,6 +9,46 @@
     <script src="lib/font-fontawesome-ae333ffef2.js"></script>
 </head>
 <style>
+     /* Giới hạn chiều cao và số dòng của tên sản phẩm */
+     .name-limited {
+        font-size: 1rem; /* Giảm kích thước font nếu cần */
+        font-weight: bold;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Tối đa 2 dòng */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        min-height: 2.4rem; /* Đảm bảo chiều cao cố định để đồng bộ */
+    }
+
+    /* Giới hạn chiều cao và số dòng của mô tả sản phẩm */
+    .description-limited {
+        font-size: 0.9rem;
+        color: #6c757d;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Tối đa 2 dòng */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        min-height: 2.4rem; /* Đảm bảo chiều cao cố định để đồng bộ */
+    }
+
+    /* Đảm bảo tất cả thẻ card có chiều cao đồng nhất */
+    .card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-body {
+        flex-grow: 1; /* Đẩy nội dung nút xuống cuối */
+    }
+
+    .card-title,
+    .card-text {
+        margin-bottom: 0.5rem; /* Khoảng cách giữa các phần */
+    }
         /* .hero {
             background-image: url('/img/hero-banner.jpg');
             background-size: cover;
@@ -39,9 +79,6 @@
             width: 100px;
             margin: 10px;
         }
-
-
-
 
         .registration-form {
     max-width: 600px;
@@ -111,7 +148,7 @@ h2 {
 
 
     </style>
-<body ng-app="myApp">
+<body>
     <header>
         <div class="container-fluid ">
             <div class="container">
@@ -143,32 +180,30 @@ h2 {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 ">
-                                <div class="row">
-                                    <div class="col-3 ">
-                                        <div class="fs-2 text-primary"><i class="fa-regular fa-user"></i></div>
-                                    </div>
-                                    <div class="col-9">
-                                        Xin chào!<br>
-                                        <?php 
-                                        if(isset($_SESSION['name_user'])){
-                                            $name_user=$_SESSION['name_user'];
-                                        }else{
-                                            $name_user='';
-                                        }
-                                        ?>
-                                                        <li class="nav-item">
-                                                <a class="nav-link" href="#"><?=$name_user?></a>
-                                            </li>
-                                        <a href="?act=login" class="text-decoration-none text-primary ">Đăng nhập</a>
-                                        <a href="?act=register" class="text-decoration-none text-secondary ">Đăng ký</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-4">
+    <div class="row">
+        <div class="col-3">
+            <div class="fs-2 text-primary"><i class="fa-regular fa-user"></i></div>
+        </div>
+        <div class="col-9">
+            <?php
+            if (isset($_SESSION['name_user'])) {
+                $name_user = $_SESSION['name_user'];
+                echo "<p class=' text-success'>Hi, $name_user</strong>".'<br>';
+                echo "<a href='?act=logout' class='text-decoration-none text-danger'>Đăng xuất</a>";
+            } else {
+                echo "<a href='?act=login' class='text-decoration-none text-primary '>Đăng nhập</a>".'<br>';
+                echo "<a href='?act=register' class='text-decoration-none text-secondary'>Đăng ký</a>";
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
                             <div class="col-4 ">
                                 <div class="d-flex justify-content-end ">
                                     <button class="btn position-relative">
-                                        <a href="?act=cart"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a>
+                                        <a href="?act=cart_detail"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a>
                                         <span
                                             class="badge bg-primary  rounded-pill position-absolute top-0 end-0 ">0</span>
                                     </button>
@@ -197,7 +232,7 @@ h2 {
                                       <li><a class="dropdown-item" href="#!trangchu">Sản Phẩm mới nhất</a></li>
                                       <li><a class="dropdown-item" href="#!timtheodanhmuc">Tìm kiếm theo danh mục</a></li>
 
-                                      <li><a class="dropdown-item" href="#">Sale 20%    </a></li>
+                                      <li><a class="dropdown-item" href="#">Sale 20%</a></li>
                                     </ul>
                                   </li>
                                 <li class="nav-item">
@@ -215,7 +250,4 @@ h2 {
                 </nav>
             </div>
         </div>
-
-        
-
     </header>
