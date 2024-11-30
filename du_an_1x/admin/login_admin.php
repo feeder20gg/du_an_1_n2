@@ -43,12 +43,11 @@
         session_start();
         if(isset($_POST['submit'])){
             $email=$_POST['email'];
-            $pass=$_POST['pass'];
-            
+            $pass= $_POST['pass'];
             if(check_login_admin($email,$pass)){
                 $value=check_login_admin($email,$pass);
                 $_SESSION['name_admin']=$value['name'];
-                header('location:index.php');
+                header('location:index.php?act=ad_controller');
             }
         }
     ?>

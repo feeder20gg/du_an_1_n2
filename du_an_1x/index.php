@@ -3,6 +3,8 @@
     require_once 'model/pdo.php';
     require_once 'model/auth.php';
     require_once 'model/product.php';
+    require_once 'model/category.php';
+
     require_once 'model/variant.php';
     require_once 'model/cart.php';
     require_once 'model/info_order.php';
@@ -16,6 +18,36 @@
     // $act=$_GET['act']||$_GET['act']='' ??'home';
     // echo $act;
     switch($act){
+        case 'search':
+            if(isset($_GET['id'])){
+                $id=(int) $_GET['id'];
+                $value=search($id);
+                print_r($value);
+            }
+            include 'user/search.php';
+            break;
+        case 'cancel_order':
+            if(isset($_GET['id'])){
+                $id=(int) $_GET['id'];
+                if(getStatus($id)['status']=='Chờ xác nhận'){
+                    cancel_order($id);
+                    header('location:?act=order_list');
+                }else{
+                    echo "<script>
+                            alert('Không thể hủy đơn hàng vì đơn hàng đã được xác nhận hoặc đang xử lý!');
+                            window.location.href = '?act=order_list';
+                        </script>";
+                }
+            }
+            break;
+        case 'order_list':
+            if(isset($_SESSION['id_user'])){
+                $id_user=(int) $_SESSION['id_user'];
+                $value=list_order($id_user);
+                print_r($value);
+            }
+            include 'user/order_list.php';
+            break;
         case 'order':
             if (isset($_POST['submit'])) {
                 $id_user = (int) $_SESSION['id_user'];
@@ -113,8 +145,11 @@
             }
             break; 
         case 'home':            
-            // header('location:index.php?act=login');
-            $list_product=list_product();
+            // // $listAllCategory=list_category();
+            // print_r($listAllCategory);
+            $list_category=showCategories();
+            // print_r($list_category);
+            $list_product=showProducts();
             // print_r($list_product);
             include 'user/home.php';
             break;
@@ -131,8 +166,9 @@
         //Dang nhap tai khoan
         case 'logout':
             logout_user();
+            header('location:?act=home');
             break;
-        case 'login':
+        case 'login':   
             if(isset($_POST['submit'])){
                 $email = $_POST['email'];
                 $pass = $_POST['pass'];
@@ -165,24 +201,22 @@
                 $pass = $_POST['pass'];
                 $check = true;
             
-                // Kiểm tra đầu vào
                 if ($name == '' || $role == '' || $address == '' || $phone_number == '' || $email == '' || $pass == '') {
-                    echo 'Nhập đầy đủ thông tin';
+                    echo '<h4 style="color:red;">Nhập đầy đủ thông tin</h4>';
                     $check = false;
+                }elseif(get_email_user($email)){
+                    echo '<h4 style="color:red;">Email đã tồn tại</h4>';
+                    $check=false;
                 } elseif (!ctype_digit($_POST['phone_number'])) {
-                    echo 'Sai số điện thoại';
+                    echo '<h4 style="color:red;">Sai số điện thoại</h4>';
                     $check = false;
                 }
-        
-                // Thêm dữ liệu nếu kiểm tra thành công
-                if ($check) {
+                        if ($check) {
                     $sql = "INSERT INTO USERS (name, role, address, phone_number, user_img, email, pass)
                             VALUES ('$name', '$role', '$address', '$phone_number', '$user_img', '$email', '$pass')";
                     pdo_excute($sql);
             
-                    // Chuyển hướng 
                     header('Location: ?act=login');
-                    // exit();                    
                     }
             }
             include 'user/register.php';

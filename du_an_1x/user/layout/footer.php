@@ -2,7 +2,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <img src="uploads/logo.jpg" alt="Logo" style="width: 100px;">
+                    <img src="upload/logo.png" alt="Logo" style="width: 100px;">
                     <p class="mt-3"></p>
                 </div>
                 <div class="col-lg-4 mb-4">

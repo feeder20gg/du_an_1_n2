@@ -33,7 +33,7 @@
             echo $_SESSION['err_product_int'];
         } ?>
         <div class="form-group">
-            <label for="price">Giá sản phẩm:</label>
+            <label for="price">Giá sản phẩm hiển thị:</label>
             <input type="number" class="form-control" name="price" id="price" value="<?= $value['price'] ?>" >
         </div>
         

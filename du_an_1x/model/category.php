@@ -1,5 +1,5 @@
 <?php 
-    function list_category() {
+    function list_category(): array {
         $sql="SELECT*FROM CATEGORIES";
         $value=select_all($sql);
         return $value;
@@ -14,4 +14,9 @@
         VALUES ('$a', '$b', '$c') ";
         pdo_excute($sql);
         //
+    }
+    function showCategories() {
+        $sql="SELECT*FROM CATEGORIES order by id asc limit 3";
+        $value=select_all($sql);
+        return $value;
     }

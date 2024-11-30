@@ -1,14 +1,16 @@
 <?php 
+    session_start();
     include_once '../model/pdo.php';
     include_once '../model/auth.php';
     include_once '../model/product.php';
     include_once '../model/category.php';
     include_once '../model/info_order.php';
+    include_once '../model/variant.php';
 
 
-    // if(!isset($_SESSION['name_admin'])||$_SESSION['name_admin']==''){
-    //     header('location:login_admin.php');
-    // }
+    if(!isset($_SESSION['name_admin'])||$_SESSION['name_admin']==''){
+        header('location:login_admin.php');
+    }
                                                                                                                                                                                                                                                                     
     $act=isset($_GET['act'])&&$_GET['act']!==''?$_GET['act']: 'ad_controller';
     // $act=$_GET['act']||$_GET['act']='' ??'home';
@@ -16,6 +18,22 @@
 
     ob_start();
     switch($act){
+        case 'delete_order':
+            if(isset($_GET['id'])){
+                $id=$_GET['id'];
+                cancel_order($id);
+                header('location:?act=list_order');
+            }
+            break;
+        case 'edit_order':
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                var_dump($_POST);
+                $order_id = (int) $_POST['order_id'];
+                $status = $_POST['status'];
+                edit_status($order_id,$status);
+                header('location:?act=list_order');
+            }
+            break;
         case 'detail_order':
             if(isset($_GET['id'])){
                 $id=(int)$_GET['id'];
@@ -29,23 +47,90 @@
             print_r($list_cart);
             include 'order/list_order.php';
             break;
-        case 'list_category':
-            $list_category=list_category();
-            print_r(count_product(5));
-            include 'category/list_category.php';
+        // case 'list_category':
+        //     $list_category=list_category();
+        //     print_r(count_product(5));
+        //     include 'category/list_category.php';
+        //     break;
+        // case 'add_category':
+        //     if(isset($_POST['btn'])){
+        //         // print_r($_POST);
+        //         $name_category=$_POST['name_category'];
+        //         $description_category=$_POST['description_category'];
+        //         $img_name=$_FILES['img_url_category']['name'];
+        //         echo $img_name;
+        //     }
+
+        //     include 'category/add_category.php';
+        //     break;
+        case 'delete_variant':
+            if(isset($_GET['id'])){
+                $id=(int)$_GET['id'];
+                $count=(check_variant($id))['count'];
+                if($count==0){
+                    deleteVariant($id);
+                    header('location:?act=list_variant');
+                }else{
+                    header('location:?act=list_variant');
+                    $_SESSION['err_deleteV']="san pham nay van con trong don hang";
+                }
+                
+            }
             break;
-        case 'add_category':
-            if(isset($_POST['btn'])){
-                // print_r($_POST);
-                $name_category=$_POST['name_category'];
-                $description_category=$_POST['description_category'];
-                $img_name=$_FILES['img_url_category']['name'];
-                echo $img_name;
+        case 'list_variant':
+            $list_variant=getAllVariant();
+            print_r($list_variant);
+            include 'variant/list_variant.php';
+            break;
+        case 'edit_variant':
+            if(isset($_GET['id'])){
+                $id=(int) $_GET['id'];
+                $infoProduct=getInfoProduct();
+                $infoRam=getInfoRam();
+                $variant=getVariantForId($id);
+                if(isset($_POST['submit'])){
+                    print_r($_POST);
+                    $id_product=(int) $_POST['id_product'];
+                    $id_ram=(int)$_POST['id_ram'];
+                    $price_variant=(int)$_POST['price_variant'];
+                    $amount_variant=(int)$_POST['amount_variant'];
+                    $check=true;
+
+
+                    if($id_product==''||$id_ram==''||$price_variant==''||$amount_variant==''){
+                        $check=false;
+                    }
+                    if($check==true){
+                        editVariant($id, $id_product,$id_ram,$price_variant,$amount_variant);
+                        header('location:?act=list_variant');
+                    }
+                }
+            }
+            include 'variant/edit_variant.php';
+
+            break;
+        case 'add_variant':
+            $infoProduct=getInfoProduct();
+            $infoRam=getInfoRam();
+            if(isset($_POST['submit'])){
+                print_r($_POST);
+                $id_product=(int) $_POST['id_product'];
+                $id_ram=(int)$_POST['id_ram'];
+                $price_variant=(int)$_POST['price_variant'];
+                $amount_variant=(int)$_POST['amount_variant'];
+                $check=true;
+                if($id_product==''||$id_ram==''||$price_variant==''||$amount_variant==''){
+                    $check=false;
+                }
+                if($check==true){
+                    addVariant($id_product,$id_ram,$price_variant,$amount_variant);
+                    header('location:?act=list_variant');
+                }
             }
 
-            include 'category/add_category.php';
+            include 'variant/add_variant.php';
             break;
-        
+
         case 'delete_product':
             if(isset($_GET['id'])){
                 $id= (int) $_GET['id'];

@@ -27,7 +27,7 @@
     <nav class="navbar navbar-expand-sm bg-primary shadow">
         <div class="container-fluid">
             <a class="navbar-brand" href="?act=ad_controller">
-                <img src="uploads/logo.jpg" style="height: 40px;" alt="Logo">
+                <img src="../upload/logo.png" style="margin-left:10px; height: 50px;" alt="Logo">
             </a>
             <ul class="navbar-nav ms-auto me-3">  
                 <li class="nav-item">
@@ -65,6 +65,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="?act=list_category"><i class="fa fa-list"></i> Quản lí danh mục</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?act=list_variant"><i class="fa fa-cogs"></i> Quản lí biến thể sản phẩm</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="?act=list_order"><i class="fa fa-shopping-cart"></i> Quản lí đơn hàng</a>

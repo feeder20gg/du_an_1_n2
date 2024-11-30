@@ -41,3 +41,9 @@
         $_SESSION['name_user']=null;
         $_SESSION['id_user']=null;
     }
+
+    function get_email_user($email) {
+        $sql="SELECT users.email as user_email from users
+        where users.email='$email'";
+        return select_one($sql);
+    }

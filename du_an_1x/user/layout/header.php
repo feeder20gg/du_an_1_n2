@@ -9,12 +9,15 @@
     <script src="lib/font-fontawesome-ae333ffef2.js"></script>
 </head>
 <style>
-     /* Giới hạn chiều cao và số dòng của tên sản phẩm */
+     th {
+        vertical-align: middle;  
+        text-align: center;      
+    }
      .name-limited {
-        font-size: 1rem; /* Giảm kích thước font nếu cần */
+        font-size: 1rem; 
         font-weight: bold;
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* Tối đa 2 dòng */
+        -webkit-line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -156,7 +159,7 @@ h2 {
                     <div class="col-2 mt-2">
                         <div class="bg-light rounded d-flex justify-content-center align-items-center "
                             style="width: 100px; height: 60px;">
-                            <img src="uploads/logo.jpg" alt="" class="mh-100 mw-100 ">
+                            <img src="upload/logo.png" alt="" class="mh-100 mw-100 ">
                         </div>
                     </div>
                     <div class="col-4 mt-3">
@@ -203,9 +206,14 @@ h2 {
                             <div class="col-4 ">
                                 <div class="d-flex justify-content-end ">
                                     <button class="btn position-relative">
+                                    <?php
+                                        $count=0;
+                                        if(isset($_SESSION['id_user'])){
+                                            $count=countTypeCart((int)$_SESSION['id_user'])['count'];
+                                        }
+                                        ?>
                                         <a href="?act=cart_detail"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a>
-                                        <span
-                                            class="badge bg-primary  rounded-pill position-absolute top-0 end-0 ">0</span>
+                                        <span class="badge bg-primary  rounded-pill position-absolute top-0 end-0 "><?=$count?></span>
                                     </button>
                                 </div>
                             </div>
@@ -223,7 +231,7 @@ h2 {
                                 <li class="nav-item">
                                     <a class="nav-link text-white " href="?act=home">Trang chủ</a>
                                 </li>
-                                <li class="nav-item dropdown ">
+                                <!-- <li class="nav-item dropdown ">
                                     <a class="nav-link dropdown-toggle text-white " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                       Danh mục
                                     </a>
@@ -234,7 +242,24 @@ h2 {
 
                                       <li><a class="dropdown-item" href="#">Sale 20%</a></li>
                                     </ul>
-                                  </li>
+                                </li> -->
+                                <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Danh mục
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <?php 
+        $listAllCategory=list_category();
+         foreach ($listAllCategory as $category): ?>
+            <li>
+                <a class="dropdown-item" href="?act=search&id=<?php echo $category['id']; ?>">
+                    <?php echo $category['name_category']; ?>
+                </a>    
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</li>
+
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="#">Giới thiệu</a>
                                 </li>
@@ -243,6 +268,9 @@ h2 {
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="#">Tin tức</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="?act=order_list">Đơn hàng đã đặt</a>
                                 </li>
                             </ul>
                         </div>

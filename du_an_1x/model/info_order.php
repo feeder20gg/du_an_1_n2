@@ -1,4 +1,16 @@
 <?php 
+    function countTypeCart($id) {
+        $sql="SELECT COUNT(*) AS count FROM CARTS WHERE ID_USER=$id";
+        return select_one($sql);
+    }
+    function getStatus($id) {
+        $sql="SELECT orders.status from orders where id=$id ";
+        return select_one($sql);
+    }
+    function cancel_order($id) {
+        $sql="DELETE FROM orders where id=$id";
+        pdo_excute($sql);
+    }
     function order_detail($id) {
             $sql="SELECT orders.id_user, orders.pay, orders.total_price, orders.status, orders.user_name, orders.user_address, orders.user_phone, orders.created_at, orders.updated_at,
                         order_detail.id_variant,order_detail.quantity,order_detail.price,
@@ -11,6 +23,18 @@
         return select_all($sql);
               
     }
+    function list_order($id) {
+        $sql="SELECT orders.id as order_id, orders.id_user, orders.pay, orders.total_price, orders.status, orders.user_name, orders.user_address, orders.user_phone, orders.created_at, orders.updated_at,
+                    order_detail.id_variant,order_detail.quantity,order_detail.price,
+                    products.name_products,products.img_url, ram.name
+        FROM orders inner join order_detail on orders.id=order_detail.id_order
+                    inner join variants on order_detail.id_variant=variants.id
+                    inner join products on variants.id_product=products.id
+                    inner join ram on variants.id_ram=ram.id
+        where orders.id_user =$id";
+    return select_all($sql);
+          
+}
     function select_order() {
         $sql="SELECT*FROM ORDERS";
         return select_all($sql);
@@ -49,10 +73,14 @@
         pdo_excute($sql);
 
     }
-
+    function edit_status($id,$stt) {
+        $sql="UPDATE ORDERS SET ORDERS.STATUS='$stt' where id=$id ";
+        pdo_excute($sql);
+    }
+    
     // function pdo_get_last_insert_id() {
     //     $conn = connect();
     //     return $conn->lastInsertId();
     // }
-
+    
     

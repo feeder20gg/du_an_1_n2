@@ -1,12 +1,25 @@
 <?php 
+    function search($id) {
+        $sql="SELECT products.id as products_id,
+            name_products,img_url,description,amount,price,id_category
+            FROM PRODUCTS where id_category=$id";
+        $list=select_all($sql);
+        return $list;
+    }
     function list_product() {
         $sql="SELECT categories.id as category_id, products.id as products_id, name_category,
             name_products,img_url,description,amount,price,id_category
             FROM PRODUCTS INNER JOIN CATEGORIES on products.id_category=categories.id";
         $list=select_all($sql);
         return $list;
+    }   
+    function showProducts(){
+        $sql="SELECT products.id as products_id,
+            name_products,img_url,description,amount,price
+            FROM PRODUCTS order by id desc limit 4";
+        $list=select_all($sql);
+        return $list;
     }
-
     function add_product($a,$b,$c,$e,$f,$g){
         $sql="INSERT INTO PRODUCTS(name_products,img_url,description,amount,price,id_category)
         VALUES ('$a','$b','$c',$e,$f,$g)";

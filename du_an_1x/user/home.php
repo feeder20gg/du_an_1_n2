@@ -29,38 +29,33 @@
 
     <h2 class="category-title">Danh mục sản phẩm</h2>
     <div class="row mb-4">
+    <?php foreach ($list_category as $category): ?>
         <div class="col-md-4">
             <div class="category-card">
-                <h4>Laptop Gaming</h4>
-                <img style="height: 180px;" src="upload/23-730x408-1.jpg" class="img-fluid" alt="Laptop Gaming">
-                <p>Mời bạn xem các sản phẩm laptop gaming mạnh mẽ nhất!</p>
-                <a href="#!laptop-gaming" class="btn btn-primary">Khám phá</a>
+                <!-- Hiển thị tên danh mục -->
+                <h4><?= htmlspecialchars($category['name_category']); ?></h4>
+                
+                <!-- Hiển thị hình ảnh -->
+                <img style="height: 180px;" 
+                     src="upload/<?= htmlspecialchars($category['img_url_category']); ?>" 
+                     class="img-fluid" 
+                     alt="<?= htmlspecialchars($category['name_category']); ?>">
+                
+                <p><?= htmlspecialchars($category['description_category']); ?></p>
+                
+                <a href="?act=search&id=<?=$category['id']?>" 
+                   class="btn btn-primary">Khám phá</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="category-card">
-                <h4>Laptop Văn Phòng</h4>
-                <img style="height: 180px;" src="upload/2109_2034_a2s.jpg" class="img-fluid" alt="Laptop Văn Phòng">
-                <p>Các mẫu laptop lý tưởng cho công việc hàng ngày.</p>
-                <a href="#!laptop-van-phong" class="btn btn-primary">Khám phá</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="category-card">
-                <h4>Phụ Kiện Laptop</h4>
-                <img style="height: 180px;" src="upload/2109_2050_8s.jpg" class="img-fluid" alt="Phụ Kiện Laptop">
-                <p>Chọn những phụ kiện tốt nhất cho laptop của bạn.</p>
-                <a href="#!phukien-laptop" class="btn btn-primary">Khám phá</a>
-            </div>
-        </div>
-    </div>
+    <?php endforeach; ?>
+</div>
     <main class="container my-5">
-    <h2 class="category-title text-center mb-4">Sản phẩm nổi bật</h2>
+    <h2 class="category-title text-center mb-4">Sản phẩm mới nhất</h2>
     <div class="row g-4">
         <?php foreach ($list_product as $product): ?>
         <div class="col-md-3">
             <div class="card shadow-sm h-100">
-                <img src="<?= $product['img_url'] ?>" class="card-img-top" alt="<?= $product['name_products'] ?>">
+                <img style="" src="<?= $product['img_url'] ?>" class="card-img-top" alt="<?= $product['name_products'] ?>">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-truncate name-limited" title="<?= $product['name_products'] ?>">
                         <?= $product['name_products'] ?>
@@ -139,11 +134,11 @@
     <!-- Phần Thương hiệu nổi bật -->
     <h2 class="category-title">Thương hiệu nổi bật</h2>
     <div class="row brand-logos">
-        <div class="col-2"><img src="uploads/4410b95393b8e2be4065f181932cf3b9.png" alt="Brand 1"></div>
-        <div class="col-2"><img src="uploads/4410b95393b8e2be4065f181932cf3b9.png" alt="Brand 2"></div>
-        <div class="col-2"><img src="uploads/4410b95393b8e2be4065f181932cf3b9.png" alt="Brand 3"></div>
-        <div class="col-2"><img src="uploads/5e8e0225b7f45864fb8c4dbf7b151533.png" alt="Brand 4"></div>
-        <div class="col-2"><img src="uploads/5e8e0225b7f45864fb8c4dbf7b151533.png" alt="Brand 5"></div>
-        <div class="col-2"><img src="uploads/5e8e0225b7f45864fb8c4dbf7b151533.png" alt="Brand 6"></div>
+        <div class="col-2"><img src="upload/2_logo_dell_73317f8e0f.png" alt="Brand 1"></div>
+        <div class="col-2"><img src="upload/5_logo_hp_ff12ba7fcb.png" alt="Brand 2"></div>
+        <div class="col-2"><img src="upload/9_logo_acer_e50fcdd1b5.png" alt="Brand 3"></div>
+        <div class="col-2"><img src="upload/133_logo_apple_a96d38701f.png" alt="Brand 4"></div>
+        <div class="col-2"><img src="upload/10_logo_msi_951916b801.png" alt="Brand 5"></div>
+        <div class="col-2"><img src="upload/4_logo_lenovo_327abc091e.png" alt="Brand 6"></div>
     </div>
 </main>
