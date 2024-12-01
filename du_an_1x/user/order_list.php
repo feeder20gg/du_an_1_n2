@@ -52,9 +52,19 @@ if (!empty($value)) {
                                 <?= htmlspecialchars($order['created_at']) ?>
                             </td>
                             <td class="align-middle text-center" rowspan="<?= count($orders) ?>">
-                                <span class="badge bg-warning"><?= htmlspecialchars($order['status']) ?></span>
+                                <?php if($order['status']=='Khách đã nhận được hàng'): ?>
+                                    <span class="badge bg-success">Đã nhận hàng thành công!</span>
+                                <?php else:?>
+                                    <span class="badge bg-warning"><?= htmlspecialchars($order['status']) ?></span>
+                                <?php endif; ?>
                                 <br>
-                                <a onclick="return confirm('Xác nhận hủy đơn hàng?')" style="color:white;" href="?act=cancel_order&id=<?= $order['order_id'] ?>"class="mt-3 btn btn-sm btn-danger">Hủy đơn hàng</a>
+                                <!-- ĐỔi trạng thái phía usser -->
+                                <?php if($order['status']=='Chờ xác nhận'): ?>
+                                    <a onclick="return confirm('Xác nhận hủy đơn hàng?')" style="color:white;" href="?act=cancel_order&id=<?= $order['order_id'] ?>"class="mt-3 btn btn-sm btn-danger">Hủy đơn hàng</a>
+                                <?php elseif($order['status']=='Đơn hàng đã được giao'): ?>
+                                    <a onclick="return confirm('Xác nhận đơn hàng?')" style="color:white;" href="?act=confirm_order&id=<?= $order['order_id'] ?>"class="mt-3 btn btn-sm btn-danger">Đã nhận hàng thành công! </a>
+                                <?php endif; ?>
+                                
                             </td>
                             <td class="align-middle text-end" rowspan="<?= count($orders) ?>">
                                 <?= number_format($order['total_price']) ?> VNĐ

@@ -50,17 +50,14 @@
                 <?php endif; ?>
             </div>
         </div>
-        <!-- Thông Tin Người Dùng -->
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h4>Thông Tin Người Dùng</h4>
             </div>
             <div class="card-body">
                 <form action="?act=order" method="POST">
- <!-- Gửi tổng tiền -->
  <input type="hidden" name="total_price" value="<?php echo $total_all; ?>">
 
-<!-- Gửi thông tin giỏ hàng -->
             <?php foreach ($list_cart as $index => $item): ?>
                 <input type="hidden" name="cart[<?php echo $index; ?>][variant_id]" value="<?php echo $item['variant_id']; ?>">
                 <input type="hidden" name="cart[<?php echo $index; ?>][price]" value="<?php echo $item['price_variant']; ?>">

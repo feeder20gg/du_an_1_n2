@@ -18,6 +18,16 @@
     // $act=$_GET['act']||$_GET['act']='' ??'home';
     // echo $act;
     switch($act){
+        case 'confirm_order':
+            if(isset($_GET['id'])){
+                $id=(int) $_GET['id'];
+                $stt='Khách đã nhận được hàng';
+                if(getStatus($id)['status']=='Đơn hàng đã được giao'){
+                    edit_status($id,$stt);
+                    header('location:?act=order_list');
+                }
+            }
+            break;
         case 'search':
             if(isset($_GET['id'])){
                 $id=(int) $_GET['id'];
@@ -57,16 +67,9 @@
                 $address = $_POST['address'];
                 $cart = $_POST['cart'];
         
-                // Bước 1: Thêm thông tin vào bảng orders
                 $id_order =add_order($id_user, 'Ship COD', $total_price, 'Chờ xác nhận', $fullname, $address, $phone);
         
-                // Bước 2: Lấy id_order vừa tạo
-                // $id_order =  pdo_get_last_insert_id();
-                // if (!$id_order) {
-                //     die("Lỗi: Không thể lấy ID của đơn hàng vừa tạo.");
-                // }
-        
-                // Bước 3: Thêm chi tiết vào bảng order_detail
+                
                 foreach ($cart as $item) {
 
                     $variant_id = (int) $item['variant_id'];
@@ -78,7 +81,6 @@
                     } 
                 }
         
-                // Chuyển hướng hoặc hiển thị thông báo thành công
                 header("Location: ?act=home");
                 exit;
             }
